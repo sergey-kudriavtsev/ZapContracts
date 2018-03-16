@@ -185,7 +185,7 @@ contract TestZapBondage {
             totalBound[specifier][oracleAddress] -= numZap;
             totalIssued[specifier][oracleAddress] -= numDots;
 
-            //holder.bonds[specifier][oracleAddress] = localTotal;
+            holder.bonds[specifier][oracleAddress] = localTotal;
 
             if(token.transfer(holderAddress, numZap*decimals)){
                 return true;
