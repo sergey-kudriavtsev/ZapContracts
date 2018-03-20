@@ -14,7 +14,7 @@ import "./BondageStorage.sol";
 contract Bondage is Mortal {
 
     BondageStorage stor;
-    RegistryInterface registry;
+    RegistryInterface public registry;
     CurrentCostInterface currentCost;
     ERC20 token;
     uint256 public decimals = 10 ** 18;
@@ -108,7 +108,7 @@ contract Bondage is Mortal {
     {
         if (numDots <= stor.getNumEscrow(holderAddress, oracleAddress, specifier)) {
             stor.updateEscrow(holderAddress, oracleAddress, specifier, numDots, "sub");
-            stor.updateBondValue(holderAddress, oracleAddress, specifier, numDots, "add");
+            stor.updateBondValue(oracleAddress, oracleAddress, specifier, numDots, "add");
             return true;
         }
         return false;

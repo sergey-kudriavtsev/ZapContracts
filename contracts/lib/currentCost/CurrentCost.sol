@@ -14,9 +14,9 @@ contract CurrentCost {
         view
         returns (uint256 cost)
     {
-        RegistryInterface.CurveType curveType;
-        uint256 curveStart;
-        uint256 curveMultiplier;
+        RegistryInterface.CurveType curveType = RegistryInterface.CurveType.Linear;
+        uint256 curveStart = 1;
+        uint256 curveMultiplier = 2;
         (curveType, curveStart, curveMultiplier) = registry.getProviderCurve(oracleAddress, specifier);
 
         require(curveType != RegistryInterface.CurveType.None);
