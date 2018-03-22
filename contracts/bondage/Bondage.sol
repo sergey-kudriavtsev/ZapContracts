@@ -284,15 +284,16 @@ contract Bondage is Mortal {
         //currentDots
         uint256 bondValue = stor.getBondValue(holderAddress, oracleAddress, specifier);
         if (bondValue >= numDots && numDots > 0) {
-            uint256 subTotal;
-
+            uint256 subTotal=1;
+            uint256 dotsIssued = getDotsIssued(oracleAddress, specifier) - subTotal;
             for (subTotal; subTotal < numDots; subTotal++) {
 
                 numTok += currentCostOfDot(
                     oracleAddress,
                     specifier,
-                    getDotsIssued(oracleAddress, specifier) - 1
+                    dotsIssued
                 );     
+                dotsIssued-=subTotal;
             }       
             stor.updateTotalBound(oracleAddress, specifier, numTok, "sub");
             stor.updateTotalIssued(oracleAddress, specifier, numDots, "sub");
