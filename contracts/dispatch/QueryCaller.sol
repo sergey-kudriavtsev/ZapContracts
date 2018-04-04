@@ -21,7 +21,7 @@ contract QueryCaller {
         uint256 time,        
         string userQuery      
     ) public returns (uint256) {
-        id = uint256(keccak256(blockNumber, now, userQuery, msg.sender));
+        id = uint256(keccak256(blockNumber, time, userQuery, msg.sender));
         return id;
     }
   
