@@ -16,15 +16,12 @@ contract QueryCaller {
         dispatch = _dispatch;
     }
 
-    function callQuery(
-        address provider,         
-        string userQuery,          
-        bytes32 endpoint,          
-        bytes32[] endpointParams  
+    function calculateId( 
+        uint256 blockNumber,
+        uint256 time,        
+        string userQuery      
     ) public returns (uint256) {
-        Dispatch d = Dispatch(dispatch);
-        uint256 tmp = d._query(provider, userQuery, endpoint, endpointParams, msg.sender);
-        id = tmp;
+        id = uint256(keccak256(blockNumber, now, userQuery, msg.sender));
         return id;
     }
   
