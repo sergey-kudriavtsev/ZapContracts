@@ -63,6 +63,28 @@ contract Dispatch is Mortal, Updatable {
         }
     }
 
+    // TEST METHOD, MUST BE DELETED
+    function _query(
+        address provider,           // data provider address
+        string userQuery,           // query string
+        bytes32 endpoint,           // endpoint specifier ala 'smart_contract'
+        bytes32[] endpointParams,    // endpoint-specific params
+        address sender
+    )
+        external
+        returns (uint256 id)
+    {
+        uint256 dots = bondage.getDots(sender, provider, endpoint);
+
+        if(dots >= 1) {
+            //enough dots
+            bondage.escrowDots(sender, provider, endpoint, 1);
+            id = uint256(keccak256(block.number, now, userQuery, sender));
+            stor.createQuery(id, provider, sender, endpoint);
+            emit Incoming(id, provider, sender, userQuery, endpoint, endpointParams);
+        }
+    }
+
     /// @notice Transfer dots from Bondage escrow to data provider's Holder object under its own address
     /// @dev Called upon data-provider request fulfillment
     function fulfillQuery(uint256 id) internal returns (bool) {

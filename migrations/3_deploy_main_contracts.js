@@ -12,6 +12,7 @@ var TheToken = artifacts.require("./TheToken.sol");
 var CurrentCost = artifacts.require("./CurrentCost.sol");
 var Update = artifacts.require("./Update.sol");
 var Faucet = artifacts.require("./Faucet.sol");
+var QueryCaller = artifacts.require("./QueryCaller.sol");
 
 var owner = "0x0";
 
@@ -40,6 +41,9 @@ module.exports = function(deployer) {
   })
   .then (() => {
     AddressSpacePointer.deployed().then(instance => instance.setAddressSpace(AddressSpace.address));
+  })
+  .then (() => {
+    return deployer.deploy(QueryCaller, Dispatch.address);
   })
   .then (() => {
     Bondage.deployed().then(instance => instance.updateContract());
