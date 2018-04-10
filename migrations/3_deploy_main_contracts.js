@@ -34,7 +34,7 @@ module.exports = function(deployer) {
     return deployer.deploy(AddressSpace, Registry.address, Bondage.address, Arbiter.address, Dispatch.address, CurrentCost.address);
   })
   .then(() => {
-    return deployer.deploy(TestSubscriber, Dispatch.address, Bondage.address);
+    return deployer.deploy(TestSubscriber, Dispatch.address, Bondage.address, TheToken.address);
   })
   .then (() => {
     AddressSpacePointer.deployed().then(instance => instance.setAddressSpace(AddressSpace.address));

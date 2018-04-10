@@ -5,6 +5,7 @@ THIS IS AN EARLY EXPERIMENTAL DEMONSTRATION. DO NOT USE WITH REAL ETHER.
 */
 import "../dispatch/DispatchInterface.sol";
 import "../bondage/BondageInterface.sol";
+import "../lib/ERC20.sol";
 
 
 contract TestSubscriber {
@@ -19,10 +20,12 @@ contract TestSubscriber {
 
     DispatchInterface dispatch;
     BondageInterface bondage;
+    ERC20 token;
 
-    function TestSubscriber(address dispatchAddress, address bondageAddress) public {
+    function TestSubscriber(address dispatchAddress, address bondageAddress, address tokenAddress) public {
         dispatch = DispatchInterface(dispatchAddress);
         bondage = BondageInterface(bondageAddress);
+        token = ERC20(tokenAddress);
     }
 
     /*
@@ -54,6 +57,8 @@ contract TestSubscriber {
     }
 
     function bondToOracle(address provider, bytes32 specifier, uint256 numZap) public {
+        uint256 bondageDecimals = 10 ** token.decimals();
+        token.approve(bondage, numZap * bondageDecimals);
         bondage.bond(provider, specifier, numZap);
     }
 
